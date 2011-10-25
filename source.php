@@ -3,19 +3,14 @@
   Plugin Name: rtSocial
   Author: rtCamp, rahul286, rutwick
   Author URI: http://rtcamp.com
-  Version: 1.0
+  Version: 1.0.1
   Description: It is the lightest social sharing plugin, uses non-blocking Javascript and a single sprite to get rid of all the clutter that comes along with the sharing buttons.
-  Tags: rtcamp, social, social sharing
+  Tags: rtcamp, social, sharing, share, social links, twitter, facebook, social share, social sharing
  */
 
 add_action( 'admin_menu', 'rtsocial_admin' );
 register_activation_hook( __FILE__, 'rtsocial_set_defaults' );
 register_deactivation_hook( __FILE__, 'rtsocial_reset_defaults' );
-
-function my_media( $context ) {
-    $test = '<a href=\'www.google.com\'>Google it</a>';
-    return $context . $test;
-}
 
 function rtsocial_admin() {
     add_options_page( 'rtSocial Options Page', 'rtSocial Options', 'manage_options', 'rtsocial-options', 'rtsocial_admin_fn' );
@@ -51,7 +46,7 @@ function rtsocial_admin_fn() { ?>
                                         <tr>
                                             <td><input value="manual" name='rtsocial_plugin_options[placement_options_set]' id="rtsocial-manual-display" type="radio" <?php echo ( $options['placement_options_set'] == 'manual' ) ? ' checked="checked" ' : ''; ?> /></td>
                                             <th id="display_manual_th"><label for="rtsocial-manual-display">Manual</label></th>
-                                            <td>For manual placement, please use this function call in your template: <br /><span><strong>&lt;?php if ( function_exists( 'rtsocial' ) ) { echo rtsocial(); } ?&gt;</strong></span></td>
+                                            <td>For manual placement, please use this function call in your template: <br /><span class="rtsocial-manual-code"><strong>&lt;?php if ( function_exists( 'rtsocial' ) ) { echo rtsocial(); } ?&gt;</strong></span></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -117,7 +112,6 @@ function rtsocial_admin_fn() { ?>
                                     </table>
                                 </div>
                             </div>
-                            <?php //echo "<td><input type='checkbox' id='tw_handle_usermeta'/>&nbsp;&nbsp;&nbsp;<label for='tw_handle_usermeta'>This is the name of usermeta key</label></td>";  ?>
                             <div class="postbox">
                                 <div title="Click to toggle" class="handlediv"><br /></div>
                                 <h3 class="hndle"> Facebook Button Settings </h3>
@@ -152,7 +146,7 @@ function rtsocial_admin_fn() { ?>
                 </div>
             </form>
         </div>
-        <div id="ads_block" class="metabox-holder align_left">
+        <div id="rtsocial_ads_block" class="metabox-holder align_left">
             <div class="postbox-container">
                 <div class="meta-box-sortables ui-sortable">
                     <div class="postbox" id="social">
