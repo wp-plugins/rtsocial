@@ -4,7 +4,7 @@ Donate link: http://rtcamp.com/
 Tags: rtcamp, social, sharing, share, social links, twitter, facebook, social share, social sharing
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 1.0
+Stable tag: 1.0.1
 
 This plugin uses non-blocking JavaScript to display facebook, twitter, etc social media sharing counter on posts/pages. 
 
@@ -40,6 +40,7 @@ if ( function_exists( 'rtsocial' ) ) {
 } 
 ?>`
 
+
 = Can I modify the images/icons used? =
 
 No. Right now you cannot. 
@@ -51,4 +52,7 @@ No. Right now you cannot.
 
 Initial release.
 
+= 1.0.1 =
+
+Fixed minor CSS issue.
 
