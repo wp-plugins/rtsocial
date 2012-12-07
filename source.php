@@ -2,9 +2,9 @@
 /*
 Plugin Name: rtSocial
 Plugin URI: http://rtcamp.com/rtsocial/
-Author: rtCamp, rahul286, rutwick, saurabhshukla
+Author: rtCamp, rahul286, rutwick, saurabhshukla, harishchaudhari
 Author URI: http://rtcamp.com/
-Version: 2.1.1
+Version: 2.1.2
 Description: It is the lightest social sharing plugin, uses non-blocking Javascript and a single sprite to get rid of all the clutter that comes along with the sharing buttons.
 Tags: rtcamp, social, sharing, share, social links, twitter, facebook, pin it, pinterest, linkedin, linked in, linked in share, google plus, google plus share, gplus share, g+ button, g+ share, plus one button, social share, social sharing
 */
@@ -503,7 +503,8 @@ function rtsocial_counter( $content = '' ) {
         $lin = array_search('lin', $options['active']);
         $lin_count = (!isset($options['hide_count']) || $options['hide_count'] != 1) ? '<div class="rtsocial-' . $options['display_options_set'] . '-count"><div class="rtsocial-' . $options['display_options_set'] . '-notch"></div><span class="rtsocial-linkedin-count">0</span></div>':'';
         
-        $summary = (strlen($post->post_content) > 100) ? wp_html_excerpt($post->post_content, 100) : $post->post_content;
+        $lin_summary = (strlen($post->post_content) > 100) ? wp_html_excerpt($post->post_content, 100) : $post->post_content;
+        $summary = strip_tags($lin_summary);
         $lin_layout = '<div class="rtsocial-linkedin-' . $options['display_options_set'] . '">';
         if($options['display_options_set'] == 'horizontal'){
             $lin_layout .= '<div class="rtsocial-linkedin-' . $options['display_options_set'] . '-button"><a class="rtsocial-linkedin-button" href= "http://www.linkedin.com/shareArticle?mini=true&url='.urlencode(get_permalink($post->ID)).'&title='.urlencode(get_the_title( $post->ID )).'&summary='.$summary.'" rel="nofollow" target="_blank" title="Share: '. $rtatitle .'"></a></div>'.$lin_count;
@@ -713,7 +714,8 @@ function rtsocial($args=array()) {
         $lin = array_search('lin', $options['active']);
         $lin_count = (!isset($options['hide_count']) || $options['hide_count'] != 1) ? '<div class="rtsocial-' . $options['display_options_set'] . '-count"><div class="rtsocial-' . $options['display_options_set'] . '-notch"></div><span class="rtsocial-linkedin-count">0</span></div>':'';
         
-        $summary = (strlen($post->post_content) > 100) ? wp_html_excerpt($post->post_content, 100) : $post->post_content;
+        $lin_summary = (strlen($post->post_content) > 100) ? wp_html_excerpt($post->post_content, 100) : $post->post_content;
+        $summary = strip_tags($lin_summary);
         $lin_layout = '<div class="rtsocial-linkedin-' . $options['display_options_set'] . '">';
         if($options['display_options_set'] == 'horizontal'){
             $lin_layout .= '<div class="rtsocial-linkedin-' . $options['display_options_set'] . '-button"><a class="rtsocial-linkedin-button" href= "http://www.linkedin.com/shareArticle?mini=true&url='.urlencode(get_permalink($post->ID)).'&title='.urlencode(get_the_title( $post->ID )).'&summary='.$summary.'" rel="nofollow" target="_blank" title="Share: '. $rtatitle .'"></a></div>'.$lin_count;
