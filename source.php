@@ -566,11 +566,10 @@ function rtsocial_counter( $content = '' ) {
         
     //Hidden permalink
     $layout .= '<a rel="nofollow" class="perma-link" href="' . get_permalink( $post->ID ) . '" title="'. esc_attr( get_the_title( $post->ID ) ) .'"></a></div>';
-$test = 'asap';
     if ( $options['placement_options_set'] == 'top' ) {
-        return $test.$layout . $content;
+        return $layout . $content;
     } else if ( $options['placement_options_set'] == 'bottom' ) {
-        return $content . $layout. $test;
+        return $content . $layout;
     } else {
         return $content;
     }
