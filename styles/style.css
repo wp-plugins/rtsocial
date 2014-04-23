@@ -282,7 +282,7 @@ div#content_block { width: 70% }
 #rtsocial-twitter { background-position: 0 -973px; display: block; float: left; height: 34px; overflow: hidden; width: 122px; }
 #rtsocial-facebook { background-position: 0 -1029px; display: block; float: left; height: 34px; overflow: hidden; width: 122px; }
 #rtsocial-pinterest { background-position: 0 -1007px; display: block; float: left; height: 34px; overflow: hidden; width: 122px; }
-#rtsocial-linkedin { background-position: 0 -837px; display: block; height: 36px; width: 122px; float: left; height: 36px; overflow: hidden;}
+#rtsocial-linkedin { background-position: 0 -837px; display: block; height: 36px; width: 122px; float: left; overflow: hidden;}
 #rtsocial-gplus { background-position: -4px -1062px; display: block; float: left; height: 37px; overflow: hidden; width: 119px; }
 
 .fb_row input#rtsocial-like-light-input { float: left; margin: 6px 6px 0 0; }
@@ -305,7 +305,7 @@ div#content_block { width: 70% }
 #rtsocial-recommend-dark:hover { background-position: 0 -304px; }
 .fb_row input#rtsocial-share-input { float: left; margin: 6px 6px 0 0; }
 #rtsocial-share-plain { background-position: 0 -478px; display: block; height: 20px; width: 59px; float: left; }
-.clear { content: "\0020"; display: block; height: 0; clear: both; visibility: hidden; }
+.rt_clear { content: "\0020"; display: block; height: 0; clear: both; visibility: hidden; }
 .clearfix:before,
 .clearfix:after { content: "."; display: block; height: 0; overflow: hidden; }
 .clearfix:after { clear: both; }
@@ -324,10 +324,10 @@ div#content_block { width: 70% }
 /* #rtsocial-pinterest{ background: url('../images/pinterest.png') no-repeat; height: 40px; width: 123px; display: block; }*/
 
 /* Sorter Styles */
-#rtsocial-sorter-container{ border: 1px solid #DFDFDF; overflow: hidden; text-align: center; width: 400px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
+#rtsocial-sorter-container{ border: 1px solid #DFDFDF; overflow: hidden; text-align: center; width: 400px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }
 
 #rtsocial-sorter-active,
-#rtsocial-sorter-inactive{ width: 100%; height: 35px; float: left; margin: 0; border: 1px solid #dfdfdf; background-color: #dfdfdf; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
+#rtsocial-sorter-inactive{ width: 100%; height: 35px; float: left; margin: 0; border: 1px solid #dfdfdf; background-color: #dfdfdf; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }
 
 #rtsocial-sorter-active li,
 #rtsocial-sorter-inactive li{ float: left; margin: 0; padding: 5px; }
@@ -350,7 +350,7 @@ div#content_block { width: 70% }
 .rtsocial-fb-icon-link,
 .rtsocial-linkedin-icon-link,
 .rtsocial-gplus-icon-link,
-.rtsocial-pinterest-icon-link{ display: block; height: 24px; text-indent: -9999px; width: 24px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;}
+.rtsocial-pinterest-icon-link{ display: block; height: 24px; text-indent: -9999px; width: 24px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }
 
 .rtsocial-twitter-icon-link{ background-position: -130px -484px; border: 1px solid #CFE3F0; }
 .rtsocial-twitter-icon-link:hover{ border: 1px solid #AACDE4; }
