@@ -2,15 +2,12 @@
  * Start Of rtSocial Plugin JS
  */
 
-jQuery( document ).ready( function() {
-    /**
-     * If Twitter is checked, get Twitter Counts
-     */
+function rtsocial_twitter(){
     if ( args.twitter == 1 && args.button_style != 'icon' && args.hide_count != 1) {
         jQuery( '.rtsocial-container' ).each( function() {
             var paNode = this;
             var key = jQuery( this ).find( '.perma-link' ).attr( 'href' );
-            var rtsocial_twiturl =  'http://urls.api.twitter.com/1/urls/count.json?url=' + key + '&callback=?';
+            var rtsocial_twiturl =  ('https:' == document.location.protocol ? 'https://' : 'http://') + 'urls.api.twitter.com/1/urls/count.json?url=' + key + '&callback=?';
             var url = jQuery( this ).find( '.rtsocial-twitter-button' ).attr( 'href' );
             jQuery.getJSON( rtsocial_twiturl,function( twitres ) {
                 url += '&url=' + twitres['url'];
@@ -19,16 +16,14 @@ jQuery( document ).ready( function() {
             } );
         } );
     }
-    /* End of Twitter */
+}
 
-    /**
-     * If Facebook is checked, get Facebook Shares
-     */
+function rtsocial_facebook(){
     if ( args.facebook == 1 && args.button_style != 'icon' && args.hide_count != 1) {
         var rtsocial_urls = {}; /* create an associative array of url as key and counts*/
         var rtsocial_fburl =  'https://api.facebook.com/method/fql.query?callback=?&query=select url,share_count from link_stat where url in(';
-        var sep='"'; // URL separatore initial value  
-        var tempFbUrl=""; // temp variable for url 
+        var sep='"'; // URL separatore initial value
+        var tempFbUrl=""; // temp variable for url
         // Genrating fql query for url and also creat associative array with initial value 0 for particular url
         jQuery( '.rtsocial-container' ).each( function() {
             tempFbUrl= jQuery( 'a.perma-link', this ).attr( 'href' );
@@ -36,23 +31,23 @@ jQuery( document ).ready( function() {
             rtsocial_fburl += sep + tempFbUrl;
             sep='","';
         } );
-        rtsocial_fburl += '")&format=json'; // ending part fql query 
+        rtsocial_fburl += '")&format=json'; // ending part fql query
         /* End of .rtsocial-container */
 
         /**
          * Facebook Data
          */
         jQuery.getJSON( rtsocial_fburl, function( fbres ) {
-            jQuery.each( fbres, function( key, value ) { //processing fql response 
+            jQuery.each( fbres, function( key, value ) { //processing fql response
                 rtsocial_urls[value.url] = value.share_count; // adding value of cout in associative array
             } );
             rtsocial_update_fbcount( rtsocial_urls ); // passing count for update
         } );
         /* End of Callback function in JSON */
     }
-    /* End of Facebook */
+}
 
-    /* Pinterest */
+function rtsocial_pinterest(){
     if ( args.pinterest == 1 && args.button_style != 'icon' && args.hide_count != 1) {
         jQuery( '.rtsocial-container' ).each( function() {
             var paNode = this;
@@ -63,20 +58,22 @@ jQuery( document ).ready( function() {
             });
         });
     }
-    
-    /* LinkedIn */
+}
+
+function rtsocial_linkedin(){
     if ( args.linkedin == 1 && args.button_style != 'icon' && args.hide_count != 1) {
         jQuery( '.rtsocial-container' ).each( function() {
             var paNode = this;
             var rtsocial_linurl = jQuery( this ).find( '.perma-link' ).attr( 'href' );
-            var rtsocial_lincount_url = 'http://www.linkedin.com/countserv/count/share?callback=?&url='+rtsocial_linurl;
+            var rtsocial_lincount_url = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'www.linkedin.com/countserv/count/share?callback=?&url='+rtsocial_linurl;
             jQuery.getJSON( rtsocial_lincount_url, function( pinres ) {
                 jQuery('.rtsocial-linkedin-count', paNode).text( ( pinres['count'] ) ? ( pinres['count'] ) : '0' );
             });
         });
     }
-    
-    /* G+ Share */
+}
+
+function rtsocial_gplus(){
     if ( args.gplus == 1 && args.button_style != 'icon' && args.hide_count != 1) {
         jQuery( '.rtsocial-container' ).each( function() {
             var paNode = this;
@@ -85,13 +82,40 @@ jQuery( document ).ready( function() {
                 action: 'rtsocial_gplus',
                 url: rtsocial_gplusurl
             };
-            
+
             jQuery.post( ajaxurl, rtsocial_gplusdata, function( gplusres ) {
                 jQuery('.rtsocial-gplus-count', paNode).text( ( gplusres ) ? ( gplusres ) : '0' );
             });
         });
     }
+}
 
+function rtsocial_init_counters(){
+    /**
+     * If Twitter is checked, get Twitter Counts
+     */
+    rtsocial_twitter();
+    /* End of Twitter */
+
+    /**
+     * If Facebook is checked, get Facebook Shares
+     */
+    rtsocial_facebook();
+    /* End of Facebook */
+
+    /* Pinterest */
+    rtsocial_pinterest();
+
+    /* LinkedIn */
+    rtsocial_linkedin();
+
+    /* G+ Share */
+    rtsocial_gplus();
+}
+
+jQuery( document ).ready( function() {
+
+    rtsocial_init_counters();
     /*
      * Showing the Tweet Count in the Admin Panel
      */
@@ -100,7 +124,7 @@ jQuery( document ).ready( function() {
         var twit_url_split = twit_url_full.split( '&' );
         var twit_url_arr = twit_url_split[3].split( '=' );
         var twit_url = twit_url_arr[1];
-        var twit_data_url = 'http://urls.api.twitter.com/1/urls/count.json?url=' + twit_url + '&callback=?';
+        var twit_data_url = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'urls.api.twitter.com/1/urls/count.json?url=' + twit_url + '&callback=?';
         jQuery.getJSON( twit_data_url, function( twitres ) {
             jQuery( '#rtsocial-display-vertical-sample span.rtsocial-twitter-count' ).text( ( twitres['count'] ) ? ( twitres['count'] ) : '0' );
             jQuery( '#rtsocial-display-horizontal-sample span.rtsocial-twitter-count' ).text( ( twitres['count'] ) ? ( twitres['count'] ) : '0' );
