@@ -4,7 +4,7 @@ Plugin Name: rtSocial
 Plugin URI: https://rtcamp.com/rtsocial/
 Author: rtCamp
 Author URI: https://rtcamp.com/
-Version: 2.1.17
+Version: 2.1.18
 Description: It is the lightest social sharing plugin, uses non-blocking Javascript and a single sprite to get rid of all the clutter that comes along with the sharing buttons.
 Tags: rtcamp, social, sharing, share, social links, twitter, facebook, pin it, pinterest, linkedin, linked in, linked in share, google plus, google plus share, gplus share, g+ button, g+ share, plus one button, social share, social sharing
 */
@@ -558,16 +558,27 @@ function rtsocial_check( $args ) {
 			update_site_option( "rts_g_plus_notice", "hide" );
 		}
 	}
-	if( ! isset( $args[ 'google_api_key' ] ) || empty( $args[ 'google_api_key' ] ) ) {		
-		$args[ 'active' ]   = array( 'tw', 'fb', 'lin', 'pin' );
-		$args[ 'inactive' ] = array( 'gplus' );
-		
+
+	// put g-plus in inactive state if google api key is not provided
+	if( ! isset( $args[ 'google_api_key' ] ) || empty( $args[ 'google_api_key' ] ) ) {
+
+		// google api key is not set and if gplus is in active state put it in inactive state
+		if( ( $key = array_search( 'gplus', $args[ 'active' ] ) ) !== false ){
+			unset($args[ 'active' ][$key]);
+
+			if( !isset( $args[ 'inactive' ] ) ){
+				$args[ 'inactive' ] = array();
+			}
+			$args[ 'inactive' ][] = 'gplus';
+		}
+
 		if( is_multisite() ) {
 			update_option( "rts_g_plus_notice", "show" );
 		} else {
 			update_site_option( "rts_g_plus_notice", "show" );
 		}
 	}
+
 	return $args;
 }
 
@@ -817,7 +828,7 @@ function rtsocial_counter( $content = '' ) {
 	$layout .= $active_services;
 
 	//Hidden permalink
-	$layout .= '<a rel="nofollow" class="perma-link" href="' . get_permalink( $post->ID ) . '" title="' . esc_attr( get_the_title( $post->ID ) ) . '"></a><input type="hidden" name="rts_id" class="rts_id" value="' . $post->ID . '" />' . wp_nonce_field( 'rts_media_' . $post->ID, 'rts_media_nonce' ) . '</div>';
+	$layout .= '<a rel="nofollow" class="perma-link" href="' . get_permalink( $post->ID ) . '" title="' . esc_attr( get_the_title( $post->ID ) ) . '"></a><input type="hidden" name="rts_id" class="rts_id" value="' . $post->ID . '" />' . wp_nonce_field( 'rts_media_' . $post->ID, 'rts_media_nonce', true, false ) . '</div>';
 	if ( $options[ 'placement_options_set' ] == 'top' ){
 		return $layout . $content;
 	} else {
@@ -1071,7 +1082,7 @@ function rtsocial( $args = array() ) {
 	$layout .= $active_services;
 
 	//Hidden permalink
-	$layout .= '<a title="' . esc_attr( $rtatitle ) . '" rel="nofollow" class="perma-link" href="' . $rts_permalink . '"></a><input type="hidden" name="rts_id" class="rts_id" value="' . $post_obj->ID . '" />' . wp_nonce_field( 'rts_media_' . $post_obj->ID, 'rts_media_nonce' ) . '</div>';
+	$layout .= '<a title="' . esc_attr( $rtatitle ) . '" rel="nofollow" class="perma-link" href="' . $rts_permalink . '"></a><input type="hidden" name="rts_id" class="rts_id" value="' . $post_obj->ID . '" />' . wp_nonce_field( 'rts_media_' . $post_obj->ID, 'rts_media_nonce', true, false ) . '</div>';
 
 	return $layout;
 }
